@@ -5,12 +5,18 @@ import javax.swing.*;
  
 public class Display extends JFrame implements ActionListener
 {
-	final JFrame frame = new JFrame("Reminder Application");
+	String[] categoryStrings = {"Birthday", "Anniversary", "Meeting", "Appointment", "Other"};
+	final JFrame mainApplicationFrame = new JFrame("Reminder Application");
 	final JButton addButton = new JButton("Add Date");
 	final JButton filterButton = new JButton("Filter");
+	final JButton resetFilterButton = new JButton("Reset Filter");
+	final JComboBox categoryPicklist = new JComboBox(categoryStrings);
 	final JPanel mainPanel = new JPanel();
-	final JPanel buttonPanel = new JPanel();
+	final JPanel addButtonPanel = new JPanel();
+	final JPanel filterPanel = new JPanel();
 	final JTextArea list = new JTextArea(20, 20);
+	
+	DateChecker dateChecker = new DateChecker();
 	
 	public Display()
 	{
@@ -21,29 +27,33 @@ public class Display extends JFrame implements ActionListener
 		
 		addButton.addActionListener(this);
 		filterButton.addActionListener(this);
+		resetFilterButton.addActionListener(this);
 		
 		mainPanel.setLayout(new BorderLayout());
-		buttonPanel.setLayout(new FlowLayout());
+		addButtonPanel.setLayout(new FlowLayout());
+		filterPanel.setLayout(new FlowLayout());
 		list.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		buttonPanel.add(addButton);
-		buttonPanel.add(filterButton);
-		mainPanel.add(buttonPanel, BorderLayout.PAGE_START);
-		mainPanel.add(list, BorderLayout.PAGE_END);
+		addButtonPanel.add(addButton);
+		filterPanel.add(filterButton);
+		filterPanel.add(categoryPicklist);
+		filterPanel.add(resetFilterButton);
+		mainPanel.add(addButtonPanel, BorderLayout.NORTH);
+		mainPanel.add(list, BorderLayout.CENTER);
+		mainPanel.add(filterPanel, BorderLayout.SOUTH);
 		
-		PasswordChecker loginScreen = new PasswordChecker(frame);
+		PasswordChecker loginScreen = new PasswordChecker(mainApplicationFrame);
 		loginScreen.setVisible(true);
 		
-		frame.getContentPane().add(mainPanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(600, 600);
-		frame.setLayout(new FlowLayout());
-		frame.setVisible(true);
+		mainApplicationFrame.getContentPane().add(mainPanel);
+		mainApplicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainApplicationFrame.setSize(600, 600);
+		mainApplicationFrame.setLayout(new FlowLayout());
+		mainApplicationFrame.setVisible(true);
 	}
 	
 	public static void main(String[] args) 
 	{
 		Display display = new Display();
-		//display.setVisible(true);
 	}
 
 	@Override
@@ -57,6 +67,11 @@ public class Display extends JFrame implements ActionListener
 		if(e.getSource() == filterButton)
 		{
 			System.out.println("Filter button pressed");
+		}
+		
+		if(e.getSource() == resetFilterButton)
+		{
+			System.out.println("Reset Filter button pressed");
 		}
 	}
 }
