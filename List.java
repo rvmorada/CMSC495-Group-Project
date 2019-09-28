@@ -5,35 +5,37 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class List {
-	public static void main(String[] args) throws FileNotFoundException, IOException{
+    
+    public static ArrayList<ImportantDate> dateList;
+    
 
-	ArrayList<ImportantDate> dateList = loadList();
-	System.out.println(dateList);
-}
-
-public static ArrayList<ImportantDate> loadList(){
-	ArrayList<ImportantDate> dateList = new ArrayList<ImportantDate>();
-	try {
-		FileInputStream fis = new FileInputStream("Dates.txt");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		dateList = (ArrayList<ImportantDate>) ois.readObject();
-		ois.close();
-		fis.close();
-	} 
-	catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	}
-	
+public static ArrayList<ImportantDate> loadList() {
+        dateList = new ArrayList<>();
+        try {
+        
+        FileInputStream fis = new FileInputStream("Dates.txt");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        dateList = (ArrayList<ImportantDate>) ois.readObject();
+        ois.close();
+        fis.close();
+        }
+        catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+        }
+        
 	return dateList;
 }
-public void write(ArrayList<ImportantDate> dateList){
+
+
+public static void write(){
 	try {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Dates.txt"));
 		out.writeObject(dateList);
