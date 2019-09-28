@@ -1,17 +1,17 @@
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Date;
 
 public class DateChecker 
 {    
-    public boolean isValidDate(String dateStr) {
+    public Date isValidDate(String dateStr) {
         DateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        simpleDateFormat.setLenient(false);
+        simpleDateFormat.setLenient(true);
         try {
-        	simpleDateFormat.parse(dateStr);
+        	return simpleDateFormat.parse(dateStr);
         } catch (ParseException e) {
-            return false;
+            return null;
         }
-        return true;
     }
 }
