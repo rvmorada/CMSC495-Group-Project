@@ -116,7 +116,10 @@ public class Display extends JFrame implements ActionListener
                 
 		PasswordChecker loginScreen = new PasswordChecker(mainApplicationFrame);
 		loginScreen.setVisible(true);
-				
+		
+		if(!loginScreen.isSucceeded()){
+				System.exit(0);
+		}
 		//build add date frame
 		addDateFrame.getContentPane().add(addDatePanel);
 		addDateFrame.setSize(400, 400);
