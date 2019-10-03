@@ -254,7 +254,20 @@ public class Display extends JFrame implements ActionListener
         
         
         private void deleteDate(ImportantDate d) {
-            System.out.println("Delete button pressed for " + d);
+             System.out.println("Delete button pressed for " + d);
+       
+            //setting the new list
+          	List.dateList= datedeleter.deleteDate(list, d);
+          	//display message when the date is deleted
+        	JOptionPane.showMessageDialog(mainApplicationFrame,
+						"You have Successfully Deleted This Date:  "+d,
+						"Deleter",
+						JOptionPane.INFORMATION_MESSAGE);
+    
+      
+      refreshList();
+           
+            
         }
 	
 	public static void main(String[] args) 
