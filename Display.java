@@ -51,6 +51,9 @@ public class Display extends JFrame implements ActionListener
 	DateAdder dateAdder = new DateAdder();
         DateEditor dateEditor = new DateEditor();
         ImportantDate toBeEdited;
+	new JScrollPane(editDescriptionText);
+        DateDeleter datedeleter=new DateDeleter(); 
+	List list =new List();
 	
 	//ArrayList<ImportantDate> dateList;
 	public Display()
