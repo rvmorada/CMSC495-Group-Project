@@ -1,5 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.*;
  
@@ -11,22 +17,30 @@ public class PasswordChecker extends JDialog {
 	private boolean succeeded;
 	private int attempts =1;
  
-	public PasswordChecker(Frame parent) {
+	public PasswordChecker(Frame parent) throws IOException {
 		super(parent, "Login", true);
 		//
+		//add image
+		URL url = new URL("https://icon-library.net/images/user-icon-jpg/user-icon-jpg-7.jpg");
+		BufferedImage pic = ImageIO.read(url);
+		JLabel picLabel = new JLabel (new ImageIcon(pic));
+		
 		JPanel panel = new JPanel(new GridBagLayout());
+		JPanel icon = new JPanel();
+		icon.add(picLabel);
 		GridBagConstraints cs = new GridBagConstraints();
  
+		
 		cs.fill = GridBagConstraints.HORIZONTAL;
  
 		lbPassword = new JLabel("Password: ");
-		cs.gridx = 0;
+		cs.gridx = 1;
 		cs.gridy = 1;
 		cs.gridwidth = 1;
 		panel.add(lbPassword, cs);
  
 		pfPassword = new JPasswordField(20);
-		cs.gridx = 1;
+		cs.gridx = 2;
 		cs.gridy = 1;
 		cs.gridwidth = 2;
 		panel.add(pfPassword, cs);
@@ -64,7 +78,7 @@ public class PasswordChecker extends JDialog {
 	 
 		JPanel bp = new JPanel();
 		bp.add(btnLogin);
- 
+		getContentPane().add(icon, BorderLayout.PAGE_START);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(bp, BorderLayout.PAGE_END);
  

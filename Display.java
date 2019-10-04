@@ -1,7 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.Border;
  
 public class Display extends JFrame implements ActionListener
 {
@@ -51,11 +53,11 @@ public class Display extends JFrame implements ActionListener
 	DateAdder dateAdder = new DateAdder();
         DateEditor dateEditor = new DateEditor();
         ImportantDate toBeEdited;
-        DateDeleter datedeleter=new DateDeleter(); 
-	List list =new List();
+        DateDeleter datedeleter=new DateDeleter(); 	
+    	List list =new List();
 	
 	//ArrayList<ImportantDate> dateList;
-	public Display()
+	public Display() throws IOException
 	{
                 List.loadList();
 		//dateList = List.loadList();
@@ -78,8 +80,8 @@ public class Display extends JFrame implements ActionListener
                 listScrollPane.setMinimumSize(new Dimension(500,300));
                 listScrollPane.setPreferredSize(new Dimension(550,450));
                 listScrollPane.setMaximumSize(new Dimension(700,500));
-                
-		addButtonPanel.add(addButton);
+        
+        addButtonPanel.add(addButton, BorderLayout.PAGE_START);
 		//filterPanel.add(filterButton);
                 filterPanel.add(filterLabel);
 		filterPanel.add(categoryFilterPicklist);
@@ -158,8 +160,9 @@ public class Display extends JFrame implements ActionListener
 		{
 			System.out.println("Add Date Panel button pressed");
 			this.displayMessage(dateAdder.addDate(addDateText.getText(), addDescriptionText.getText(), addCategoryPicklist.getSelectedItem().toString()));
-			addDateFrame.setVisible(false);
+			addDateFrame.dispose();
                         categoryFilterPicklist.setSelectedIndex(0);
+                        clearInput(addDateText, addDescriptionText);
                         refreshList();
 		} 
                 else if(e.getSource() == editDateFrameButton) {
@@ -178,11 +181,15 @@ public class Display extends JFrame implements ActionListener
 
 	}
 	
+	public void clearInput(JTextArea date, JTextArea desc){
+		date.setText("");
+		desc.setText("");
+	}
+	
 	//use this.displayMessage("") to call this
 	public void displayMessage(String message)
 	{
-		messageText.setText(message);
-		displayMessageFrame.setVisible(true);		
+		JOptionPane.showMessageDialog(displayMessageFrame, message, "Message", JOptionPane.INFORMATION_MESSAGE);	
 	}
         
         /**
@@ -202,9 +209,11 @@ public class Display extends JFrame implements ActionListener
                 if (d.getCategory().equals(filter) || filter.equals("All")) {
                     //create panel to show date information
                     JPanel datePanel = new JPanel(new GridLayout(1,4));
+                    Border raised = BorderFactory.createEtchedBorder();
                     datePanel.setMinimumSize(new Dimension(300,40));
                     datePanel.setPreferredSize(new Dimension(500,40));
                     datePanel.setMaximumSize(new Dimension(700,40));
+                    datePanel.setBorder(raised);
                     
                     // create components to go into datePanel
                     JLabel date = new JLabel(d.getDateAsString());
@@ -256,23 +265,20 @@ public class Display extends JFrame implements ActionListener
         
         
         private void deleteDate(ImportantDate d) {
-             System.out.println("Delete button pressed for " + d);
-       
-            //setting the new list
-          	List.dateList= datedeleter.deleteDate(list, d);
-          	//display message when the date is deleted
-        	JOptionPane.showMessageDialog(mainApplicationFrame,
-						"You have Successfully Deleted This Date:  "+d,
-						"Deleter",
-						JOptionPane.INFORMATION_MESSAGE);
-    
-      
-      refreshList();
-           
-            
+            System.out.println("Delete button pressed for " + d);
+            //setting the new list	
+          	List.dateList= datedeleter.deleteDate(list, d);	
+          	//display message when the date is deleted	
+        	JOptionPane.showMessageDialog(mainApplicationFrame,	
+						"You have Successfully Deleted This Date:  "+d,	
+						"Deleter",	
+						JOptionPane.INFORMATION_MESSAGE);	
+
+        	refreshList();	
+
         }
 	
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{
 		Display display = new Display();
 	}
