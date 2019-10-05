@@ -1,26 +1,19 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 
 public class DateDeleter {
-ArrayList<ImportantDate> deleteDate(List list,ImportantDate date) {
-
-
-	//deleting the selected date
-	for(int i=0;i<list.dateList.size();i++) {
-		System.out.println(list.dateList.get(i));
+        public String deleteDate(ImportantDate date) {
 		
-		if(String.valueOf(date).equals(String.valueOf(list.dateList.get(i)))) {
-			list.dateList.remove(i);
-			break;
+		if(List.dateList.remove(date)) {
+                    List.write();
+                    return "You have successfully deleted this date: " + date;
+                }
+                return "Date unable to be deleted";
 			
-		}
+		//}
 		
 		
 	}
-	
-	//returning the new date list
-	return(list.dateList);
 		
-		
-	  }
 }
+

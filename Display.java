@@ -33,8 +33,11 @@ public class Display extends JFrame implements ActionListener
         final JPanel editDateFieldPanel = new JPanel();
         final JPanel editDescriptionFieldPanel = new JPanel();
         final JPanel editCategoryFieldPanel = new JPanel();
+        final JPanel listOuterPanel = new JPanel();
         final JScrollPane listScrollPane;
 	final JPanel listPanel = new JPanel();
+        final JPanel listHeaderPanel = new JPanel();
+        final String[] listHeadings = {"Date", "Description", "Category", "Action"};
 	final JTextArea messageText = new JTextArea(1, 20);
 	final JTextArea addDateText = new JTextArea(1,10);
 	final JTextArea addDescriptionText = new JTextArea(3,10);
@@ -53,7 +56,7 @@ public class Display extends JFrame implements ActionListener
 	DateAdder dateAdder = new DateAdder();
         DateEditor dateEditor = new DateEditor();
         ImportantDate toBeEdited;
-        DateDeleter datedeleter=new DateDeleter(); 	
+        DateDeleter dateDeleter=new DateDeleter(); 	
     	List list =new List();
 	
 	//ArrayList<ImportantDate> dateList;
@@ -75,19 +78,32 @@ public class Display extends JFrame implements ActionListener
 		mainPanel.setLayout(new BorderLayout());
 		addButtonPanel.setLayout(new FlowLayout());
 		filterPanel.setLayout(new FlowLayout());
+                listOuterPanel.setLayout(new BorderLayout());
                 listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
                 listScrollPane = new JScrollPane(listPanel);
                 listScrollPane.setMinimumSize(new Dimension(500,300));
                 listScrollPane.setPreferredSize(new Dimension(550,450));
                 listScrollPane.setMaximumSize(new Dimension(700,500));
-        
-        addButtonPanel.add(addButton, BorderLayout.PAGE_START);
-		//filterPanel.add(filterButton);
+                listHeaderPanel.setLayout(new GridLayout(1,4));
+                listHeaderPanel.setMinimumSize(new Dimension(300,40));
+                listHeaderPanel.setPreferredSize(new Dimension(500,40));
+                listHeaderPanel.setMaximumSize(new Dimension(700,40));
+                listHeaderPanel.setBackground(Color.blue);
+                for (String s : listHeadings) {
+                    JLabel heading = new JLabel(s);
+                    heading.setForeground(Color.white);
+                    heading.setBackground(Color.blue);
+                    listHeaderPanel.add(heading);
+                }
+                listOuterPanel.add(listHeaderPanel, BorderLayout.PAGE_START);
+                listOuterPanel.add(listScrollPane, BorderLayout.CENTER);
+                
+                addButtonPanel.add(addButton, BorderLayout.PAGE_START);
                 filterPanel.add(filterLabel);
 		filterPanel.add(categoryFilterPicklist);
-		//filterPanel.add(resetFilterButton);
+                
 		mainPanel.add(addButtonPanel, BorderLayout.NORTH);
-		mainPanel.add(listScrollPane, BorderLayout.CENTER);
+		mainPanel.add(listOuterPanel, BorderLayout.CENTER);
 		mainPanel.add(filterPanel, BorderLayout.SOUTH);
 		
 		//build panel for add date frame
@@ -181,20 +197,19 @@ public class Display extends JFrame implements ActionListener
 
 	}
 	
-	public void clearInput(JTextArea date, JTextArea desc){
+	private void clearInput(JTextArea date, JTextArea desc){
 		date.setText("");
 		desc.setText("");
 	}
 	
 	//use this.displayMessage("") to call this
-	public void displayMessage(String message)
+	private void displayMessage(String message)
 	{
 		JOptionPane.showMessageDialog(displayMessageFrame, message, "Message", JOptionPane.INFORMATION_MESSAGE);	
 	}
         
         /**
-         * Filters and displays date information in list form
-         * 
+         * Filters and displays date information in list form.
          */
         private void refreshList() {
             // get the selected filter from the picklist
@@ -263,18 +278,22 @@ public class Display extends JFrame implements ActionListener
             editDateFrame.setVisible(true);
         }
         
-        
+        /**
+         * Deletes date from list after user confirmation
+         * @param d 
+         */
         private void deleteDate(ImportantDate d) {
             System.out.println("Delete button pressed for " + d);
-            //setting the new list	
-          	List.dateList= datedeleter.deleteDate(list, d);	
-          	//display message when the date is deleted	
-        	JOptionPane.showMessageDialog(mainApplicationFrame,	
-						"You have Successfully Deleted This Date:  "+d,	
-						"Deleter",	
-						JOptionPane.INFORMATION_MESSAGE);	
-
+            
+            int dialogButton = JOptionPane.OK_CANCEL_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Deleting date: \n" + d + "\nPress OK to confirm", "Are you sure?", dialogButton);
+            if(dialogResult == 0) {
+                // delete date (if possible) and show message
+          	displayMessage(dateDeleter.deleteDate(d));
         	refreshList();	
+            }
+            
+               
 
         }
 	
