@@ -1,20 +1,4 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.*;
- 
-public class PasswordChecker extends JDialog {
- 
-	private JPasswordField pfPassword;
-	private JLabel lbPassword;
-	private JButton btnLogin;
-	private boolean succeeded;
+private boolean succeeded;
 	private int attempts =1;
  
 	public PasswordChecker(Frame parent) throws IOException {
@@ -26,7 +10,9 @@ public class PasswordChecker extends JDialog {
 		JLabel picLabel = new JLabel (new ImageIcon(pic));
 		
 		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBackground(Color.white);
 		JPanel icon = new JPanel();
+		icon.setBackground(Color.white);
 		icon.add(picLabel);
 		GridBagConstraints cs = new GridBagConstraints();
  
@@ -77,11 +63,12 @@ public class PasswordChecker extends JDialog {
 		});
 	 
 		JPanel bp = new JPanel();
+		bp.setBackground(Color.white);
 		bp.add(btnLogin);
 		getContentPane().add(icon, BorderLayout.PAGE_START);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(bp, BorderLayout.PAGE_END);
- 
+
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
