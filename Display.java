@@ -7,12 +7,14 @@ import javax.swing.border.Border;
  
 public class Display extends JFrame implements ActionListener
 {
+	
 	String[] categoryStrings = {"Birthday", "Anniversary", "Meeting", "Appointment", "Other"};
         String[] filterCategoryStrings = {"All", "Birthday", "Anniversary", "Meeting", "Appointment", "Other"};
 	final JFrame mainApplicationFrame = new JFrame("Reminder Application");
 	final JFrame addDateFrame = new JFrame("Add Date");
         final JFrame editDateFrame = new JFrame("Edit Date");
 	final JFrame displayMessageFrame = new JFrame("!");
+	
 	final JButton addButton = new JButton("Add Date");
 	final JButton addDateFrameButton = new JButton("Add Date");
         final JButton editDateFrameButton = new JButton("Edit Date");
@@ -62,22 +64,41 @@ public class Display extends JFrame implements ActionListener
 	//ArrayList<ImportantDate> dateList;
 	public Display() throws IOException
 	{
+
                 List.loadList();
 		//dateList = List.loadList();
-		
+      
 		messageText.setEditable(false);		
 		categoryFilterPicklist.setSelectedIndex(0);
-		addButton.addActionListener(this); 
+		
 		filterButton.addActionListener(this);
                 categoryFilterPicklist.addActionListener(this);
 		resetFilterButton.addActionListener(this);
 		addDateFrameButton.addActionListener(this);
                 editDateFrameButton.addActionListener(this);
+               //setting backgrounds to a white color
+                mainApplicationFrame.setBackground(Color.white);
+        		categoryFilterPicklist.setBackground(Color.white);
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setBackground(Color.white);
+		 listOuterPanel.setBackground(Color.white);
+			addButtonPanel.setBackground(Color.white);
+			filterPanel.setBackground(Color.white);
+			listPanel.setBackground(Color.white);
+			mainPanel.setBackground(Color.white);
+			listHeaderPanel.setBackground(Color.white);
+			filterLabel.setBackground(Color.white);
+			categoryFilterPicklist.setBackground(Color.white);
 		
 		//build panel for main application frame
-		mainPanel.setLayout(new BorderLayout());
+                
+                
+        		addButton.addActionListener(this); 
+        		
+			
 		addButtonPanel.setLayout(new FlowLayout());
 		filterPanel.setLayout(new FlowLayout());
+
                 listOuterPanel.setLayout(new BorderLayout());
                 listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
                 listScrollPane = new JScrollPane(listPanel);
@@ -91,6 +112,7 @@ public class Display extends JFrame implements ActionListener
                 listHeaderPanel.setBackground(Color.blue);
                 for (String s : listHeadings) {
                     JLabel heading = new JLabel(s);
+                   
                     heading.setForeground(Color.white);
                     heading.setBackground(Color.blue);
                     listHeaderPanel.add(heading);
@@ -107,6 +129,8 @@ public class Display extends JFrame implements ActionListener
 		mainPanel.add(filterPanel, BorderLayout.SOUTH);
 		
 		//build panel for add date frame
+
+		
 		addDatePanel.setLayout(new BoxLayout(addDatePanel, BoxLayout.PAGE_AXIS));
 		addDateFieldPanel.add(addDateFieldLabel);
 		addDateFieldPanel.add(addDateText);
@@ -156,6 +180,7 @@ public class Display extends JFrame implements ActionListener
 		displayMessageFrame.setLayout(new FlowLayout());
 		
 		//build main application frame
+		
 		mainApplicationFrame.getContentPane().add(mainPanel);
 		mainApplicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainApplicationFrame.setSize(600, 600);
@@ -231,7 +256,9 @@ public class Display extends JFrame implements ActionListener
                     datePanel.setBorder(raised);
                     
                     // create components to go into datePanel
+                    
                     JLabel date = new JLabel(d.getDateAsString());
+                    
                     JLabel cat = new JLabel(d.getCategory());
                     JLabel description = new JLabel(d.getDescription());
                     JPanel buttons = new JPanel(new GridLayout(1,2));
@@ -239,12 +266,14 @@ public class Display extends JFrame implements ActionListener
                     JButton deleteButton = new JButton("delete");
                     buttons.add(editButton);
                     buttons.add(deleteButton);
-
+                    buttons.setBackground(Color.white);
+                    datePanel.setBackground(Color.white);
                     // add action listeners to edit and delete buttons 
                     editButton.addActionListener(e -> {editDate(d);});
                     deleteButton.addActionListener(e -> {deleteDate(d);});
 
                     // add components to datePanel
+                    
                     datePanel.add(date);
                     datePanel.add(description);
                     datePanel.add(cat);
