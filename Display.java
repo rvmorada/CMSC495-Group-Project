@@ -1,13 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
- 
+
 public class Display extends JFrame implements ActionListener
 {
-	
+	private File pwd = new File("pwd.txt");
 	String[] categoryStrings = {"Birthday", "Anniversary", "Meeting", "Appointment", "Other"};
         String[] filterCategoryStrings = {"All", "Birthday", "Anniversary", "Meeting", "Appointment", "Other"};
 	final JFrame mainApplicationFrame = new JFrame("Reminder Application");
@@ -77,11 +78,11 @@ public class Display extends JFrame implements ActionListener
 		addDateFrameButton.addActionListener(this);
                 editDateFrameButton.addActionListener(this);
                //setting backgrounds to a white color
-                mainApplicationFrame.setBackground(Color.white);
-        		categoryFilterPicklist.setBackground(Color.white);
-		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBackground(Color.white);
-		 listOuterPanel.setBackground(Color.white);
+            mainApplicationFrame.setBackground(Color.white);
+        	categoryFilterPicklist.setBackground(Color.white);
+        	mainPanel.setLayout(new BorderLayout());
+        	mainPanel.setBackground(Color.white);
+        	listOuterPanel.setBackground(Color.white);
 			addButtonPanel.setBackground(Color.white);
 			filterPanel.setBackground(Color.white);
 			listPanel.setBackground(Color.white);
@@ -105,6 +106,7 @@ public class Display extends JFrame implements ActionListener
                 listScrollPane.setMinimumSize(new Dimension(500,300));
                 listScrollPane.setPreferredSize(new Dimension(550,450));
                 listScrollPane.setMaximumSize(new Dimension(700,500));
+                listScrollPane.setBackground(Color.white);
                 listHeaderPanel.setLayout(new GridLayout(1,4));
                 listHeaderPanel.setMinimumSize(new Dimension(300,40));
                 listHeaderPanel.setPreferredSize(new Dimension(500,40));
@@ -157,9 +159,17 @@ public class Display extends JFrame implements ActionListener
                 editDatePanel.add(editDateFrameButton);
                 
                 
-                
+        
+        
 		PasswordChecker loginScreen = new PasswordChecker(mainApplicationFrame);
-		loginScreen.setVisible(true);
+		if(!pwd.exists()){
+			loginScreen.setPassword(mainApplicationFrame);
+		}
+		else{
+		
+			loginScreen.setVisible(true);
+		
+		
 		
 		if(!loginScreen.isSucceeded()){
 				System.exit(0);
@@ -187,7 +197,7 @@ public class Display extends JFrame implements ActionListener
 		mainApplicationFrame.setLayout(new FlowLayout());
 		mainApplicationFrame.setVisible(true);
                 refreshList();
-	}
+		}}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
