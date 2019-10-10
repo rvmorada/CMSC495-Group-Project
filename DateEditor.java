@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 public class DateEditor 
 {
 	DateChecker dateChecker = new DateChecker();
-	//List list = new List()
         
         public String editDate(String date, String description, String category, ImportantDate id) {
             Date d;
@@ -16,8 +15,7 @@ public class DateEditor
             {
                     id.edit(d,description, category);
                     List.write();
-                    return "Date successfully edited!";
-                    
+                    return "Date successfully edited!";                    
             }
             return "Invalid Date. Please enter a valid date.";
         }
