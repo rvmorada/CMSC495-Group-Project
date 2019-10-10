@@ -13,36 +13,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class List {
-    
-    public static ArrayList<ImportantDate> dateList;
-    
 
-public static ArrayList<ImportantDate> loadList() {
-        dateList = new ArrayList<>();
+    public static ArrayList < ImportantDate > dateList;
+
+
+    public static ArrayList < ImportantDate > loadList() {
+        dateList = new ArrayList < > ();
         try {
-        
-        FileInputStream fis = new FileInputStream("Dates.txt");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        dateList = (ArrayList<ImportantDate>) ois.readObject();
-        ois.close();
-        fis.close();
+
+            FileInputStream fis = new FileInputStream("Dates.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            dateList = (ArrayList < ImportantDate > ) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        catch (IOException | ClassNotFoundException e) {
-        e.printStackTrace();
-        }
-        
-	return dateList;
-}
+
+        return dateList;
+    }
 
 
-public static void write(){
-	try {
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Dates.txt"));
-		out.writeObject(dateList);
-		out.close();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-}
-	
+    public static void write() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Dates.txt"));
+            out.writeObject(dateList);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
