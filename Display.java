@@ -269,12 +269,15 @@ public class Display extends JFrame implements ActionListener
 		} 
                 else if(e.getSource() == addDateFrameButton)
 		{
-			System.out.println("Add Date Panel button pressed");
-			this.displayMessage(dateAdder.addDate(addDateText.getText(), addDescriptionText.getText(), addCategoryPicklist.getSelectedItem().toString()));
-			addDateFrame.dispose();
-                        categoryFilterPicklist.setSelectedIndex(0);
-                        clearInput(addDateText, addDescriptionText);
-                        refreshList();
+                        if ((addDateText.getText().isEmpty())||(addDescriptionText.getText().isEmpty())||(addCategoryPicklist.getSelectedIndex()==-1)) {			System.out.println("Add Date Panel button pressed");
+                            this.displayMessage("All Fields Required");
+                        } else {
+                            this.displayMessage(dateAdder.addDate(addDateText.getText(), addDescriptionText.getText(), addCategoryPicklist.getSelectedItem().toString()));
+                            addDateFrame.dispose();
+                            categoryFilterPicklist.setSelectedIndex(0);
+                            clearInput(addDateText, addDescriptionText);
+                            refreshList();
+                        }
 		} 
                 else if(e.getSource() == editDateFrameButton) {
                         System.out.println("Edit Frame button clicked for " + toBeEdited.toString());
