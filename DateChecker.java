@@ -6,12 +6,18 @@ import java.util.Date;
 public class DateChecker 
 {    
     public Date isValidDate(String dateStr) {
-        DateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        if(dateStr.trim().equals("")){
+        	
+        	return null;
+        }
+        else{
+    	DateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         simpleDateFormat.setLenient(true);
         try {
         	return simpleDateFormat.parse(dateStr);
         } catch (ParseException e) {
             return null;
+        }
         }
     }
 }

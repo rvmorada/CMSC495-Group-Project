@@ -277,11 +277,9 @@ public class Display extends JFrame implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
-            System.out.println("Add button pressed");
             addDateFrame.setVisible(true);
         } else if (e.getSource() == addDateFrameButton) {
             if ((addDateText.getText().isEmpty()) || (addDescriptionText.getText().isEmpty()) || (addCategoryPicklist.getSelectedIndex() == -1)) {
-                System.out.println("Add Date Panel button pressed");
                 this.displayMessage("All Fields Required");
             } else {
                 this.displayMessage(dateAdder.addDate(addDateText.getText(), addDescriptionText.getText(), addCategoryPicklist.getSelectedItem().toString()));
@@ -291,14 +289,13 @@ public class Display extends JFrame implements ActionListener {
                 refreshList();
             }
         } else if (e.getSource() == editDateFrameButton) {
-            System.out.println("Edit Frame button clicked for " + toBeEdited.toString());
+
             this.displayMessage(dateEditor.editDate(editDateText.getText(), editDescriptionText.getText(), editCategoryPicklist.getSelectedItem().toString(), toBeEdited));
             editDateFrame.setVisible(false);
             refreshList();
         }
         // if filter selection is changed, refresh list
         else if (e.getSource() == categoryFilterPicklist) {
-            System.out.println("Filter list changed to " + categoryFilterPicklist.getSelectedItem());
             refreshList();
 
         }
@@ -390,7 +387,6 @@ public class Display extends JFrame implements ActionListener {
      */
     private void editDate(ImportantDate d) {
         toBeEdited = d;
-        System.out.println("Edit Button pressed for " + d);
 
         // set info in edit window 
         editDateText.setText(d.getDateAsString());
@@ -406,7 +402,6 @@ public class Display extends JFrame implements ActionListener {
      * @param d 
      */
     private void deleteDate(ImportantDate d) {
-        System.out.println("Delete button pressed for " + d);
 
         int dialogButton = JOptionPane.OK_CANCEL_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Deleting date: \n" + d + "\nPress OK to confirm", "Are you sure?", dialogButton);
